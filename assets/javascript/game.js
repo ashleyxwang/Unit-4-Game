@@ -1,6 +1,13 @@
 //pseudocode functions
+//pick random number
+
 //crystals into buttons
 
+
+
+
+$(document).ready(function(){
+//total wins, total loses
 
 //declare variables
 var userSum = 0;
@@ -14,8 +21,9 @@ var totalLosses = 0;
 var winMessage = "";
 var loseMessage = "";
 
+targetNumber = Math.floor(Math.random() * (120 - 19)) + 19;
+console.log (targetNumber);
 
-//total wins, total loses
 
 //reset function
     //display user score = 0
@@ -28,3 +36,4 @@ var loseMessage = "";
 //if score === random number, win++
 
 //update total wins and total loses, reset
+ });
