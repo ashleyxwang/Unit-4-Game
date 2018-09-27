@@ -110,6 +110,7 @@ $(document).ready(function () {
             youLose();
 
             reset();
+        };
     });
 
 });
