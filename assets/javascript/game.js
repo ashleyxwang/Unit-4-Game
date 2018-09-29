@@ -4,6 +4,12 @@ var crystalSrcList = [
     "assets/images/Crystal3.jpg",
     "assets/images/Crystal4.jpg",
 ]
+var userScore = 0;
+var targetNumber = 0;
+var crystalValues = genCrystalValues();
+var totalWins = 0;
+var totalLosses = 0;
+var locked = false;
 
 //function list
 function getRandom(min, max) {
@@ -23,58 +29,45 @@ function genCrystalValues() {
 function attachCrystals(cValues) {
     // get a reference to the crystal container div
     var container = $(".crystals");
-
+    $(".crystals").empty();
     // iterate 4 times for 4 crystals
     for (let i = 0; i < 4; i++) {
         // create an image
-        var crystalImg = $("<img>");
+        var img = "<img id=" + i + ">";
+        var crystalImg = $(img);
 
         // assign it a value
         crystalImg.attr("value", cValues[i]);
         crystalImg.attr("src", crystalSrcList[i]);
-        crystalImg.attr("width", "150px");
+        crystalImg.attr("height", "200px");
 
-        // attach it to the container
         container.append(crystalImg);
-        console.log(crystalImg.attr("value"));
     }
     return container;
 }
 
-function newCrystalValues() {
-    var newValues = genCrystalValues();
-    parseInt($(event.target).attr("value"));
-
-}
-
-function youWin () {
+function youWin() {
     $("#userMessage").text("YOU WIN!!");
 }
 
-function youLose () {
-     $("#userMessage").text("You went over, try again!");
+function youLose() {
+    $("#userMessage").text("You went over, try again!");
 }
 
+function reset() {
+    $("#userSum").text(userScore = 0);
+    $("#userMessage");
+
+    targetNumber = getRandom(19, 120);
+    $("#randomNumber").text(targetNumber);
+    genCrystalValues();
+    locked = false;
+    // attachCrystals(crystalValues);
+    // $(".crystals").on("click", function (event) {
+
+};
 
 $(document).ready(function () {
-    //declare variables
-    var userScore = 0;
-    var targetNumber = 0;
-    var crystalValues = genCrystalValues();
-    var totalWins = 0;
-    var totalLosses = 0;
-
-    function reset() {
-        $("#userSum").text(userScore = 0);
-        $("#userMessage").delay(5000).empty();
-
-        targetNumber= getRandom(19, 120);
-        $("#randomNumber").text(targetNumber);
-        // newCrystalValues();
-        // $(".crystals").on("click", function (event) {
-
-    };
-
     //pick random number between 19-120
     targetNumber = getRandom(19, 120);
 
@@ -93,24 +86,30 @@ $(document).ready(function () {
     //display total losses
     $("#Losses").text("Losses: " + totalLosses);
 
-    $(".crystals").on("click", function (event) {
-        var clickedNumber = parseInt($(event.target).attr("value"));
-
+    $(".crystals img").on("click", function (event) {
+        if (locked) {
+            return;
+        }
+        locked = true;
+        var clickedNumber = parseInt($(this).attr("value"));
+        
         userScore += clickedNumber;
         $("#userSum").text(userScore);
 
         if (userScore === targetNumber) {
-            $("#Wins").text("Wins: " + totalWins++);
+            totalWins += 1;
+            $("#Wins").text("Wins: " + totalWins);
             youWin();
 
-            reset();           
+            reset();
         };
         if (userScore > targetNumber) {
-            $("#Losses").text("Losses: " + totalLosses++);
+            totalLosses += 1;
+            $("#Losses").text("Losses: " + totalLosses);
             youLose();
 
             reset();
         };
+        locked = false;
     });
-
 });

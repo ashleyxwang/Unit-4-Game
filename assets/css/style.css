@@ -1,0 +1,12 @@
+body {
+    background-image: url(../images/marble_bg.jpg);
+    font-family: 'Cabin Sketch', cursive;
+};
+
+header {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+};
+
+#crystalStyle {
+    background-color: #fff;
+};
